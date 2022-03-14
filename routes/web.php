@@ -33,7 +33,7 @@ Auth::routes(['verify' => true]);
 
 // dashboard Routes
 // Route::get('/', [DashboardController::class, 'dashboardEcommerce'])->name('dashboard-ecommerce')->middleware('verified');
-Route::get('/', [DashboardController::class, 'dashboardEcommerce'])->name('dashboard-ecommerce');
+Route::get('/', [DashboardController::class, 'welcomeIndexPage'])->name('welcomeIndexPage');
 
 Route::group(['prefix' => 'dashboard'], function () {
     Route::get('ecommerce', [DashboardController::class, 'dashboardEcommerce'])->name('dashboard-ecommerce');
