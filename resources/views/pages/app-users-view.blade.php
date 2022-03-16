@@ -17,18 +17,24 @@
             class="users-avatar-shadow rounded-circle" height="64" width="64">
         </a>
         <div class="media-body pt-25">
-          <h4 class="media-heading"><span class="users-view-name">Dean Stanley </span><span
+          <h4 class="media-heading"><span class="users-view-name">{{$user->name}}
+          </span>
+          {{-- <span
               class="text-muted font-medium-1"> @</span><span
-              class="users-view-username text-muted font-medium-1 ">candy007</span></h4>
-          <span>ID:</span>
-          <span class="users-view-id">305</span>
+              class="users-view-username text-muted font-medium-1 ">candy007</span> --}}
+            </h4>
+          <span>Employee No ::</span>
+          <span class="users-view-id">{{$user->employee_no}}</span>
         </div>
+
+
       </div>
     </div>
     <div class="col-12 col-sm-5 px-0 d-flex justify-content-end align-items-center px-1 mb-2">
-      <a href="javascript:void(0);" class="btn btn-sm mr-25 border"><i class="bx bx-envelope font-small-3"></i></a>
-      <a href="javascript:void(0);" class="btn btn-sm mr-25 border">Profile</a>
-      <a href="{{asset('app/users/edit')}}" class="btn btn-sm btn-primary">Edit</a>
+      <a href="mailto:{{$user->email}}" class="btn btn-sm mr-25 border"><i class="bx bx-envelope font-small-3"></i></a>
+
+      <a href="{{route('users.show',$user)}}" class="btn btn-sm mr-25 border">Profile</a>
+      <a href="{{route('users.edit',$user)}}" class="btn btn-sm btn-primary">Edit</a>
     </div>
   </div>
   <!-- users view media object ends -->
@@ -41,65 +47,57 @@
             <tbody>
               <tr>
                 <td>Registered:</td>
-                <td>01/01/2019</td>
+                <td>{{$user->created_at}}</td>
               </tr>
               <tr>
-                <td>Latest Activity:</td>
-                <td class="users-view-latest-activity">30/04/2019</td>
+                <td>National Id:</td>
+                <td class=""> {{ $user->national_id}} </td>
+              </tr>
+              <tr>
+                <td>Phone:</td>
+                <td class=""> {{ $user->phone}} </td>
               </tr>
               <tr>
                 <td>Verified:</td>
-                <td class="users-view-verified">Yes</td>
+                <td class="users-view-verified"> {{ $user->email_verified_at ? "YES": "NO" }} </td>
               </tr>
-              <tr>
-                <td>Role:</td>
-                <td class="users-view-role">Staff</td>
-              </tr>
+
               <tr>
                 <td>Status:</td>
-                <td><span class="badge badge-light-success users-view-status">Active</span></td>
+                <td>
+                  @if ($user->status == "active")
+                  <span class="badge badge-light-success users-view-status">Active</span>
+                  @else
+                  <span class="badge badge-light-danger users-view-status">Banned</span>
+                  @endif
+                  </td>
               </tr>
             </tbody>
           </table>
         </div>
+
         <div class="col-12 col-md-8">
-          <div class="table-responsive">
-            <table class="table mb-0">
-              <thead>
-                <tr>
-                  <th>Module Permission</th>
-                  <th>Read</th>
-                  <th>Write</th>
-                  <th>Create</th>
-                  <th>Delete</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Users</td>
-                  <td>Yes</td>
-                  <td>No</td>
-                  <td>No</td>
-                  <td>Yes</td>
-                </tr>
-                <tr>
-                  <td>Articles</td>
-                  <td>No</td>
-                  <td>Yes</td>
-                  <td>No</td>
-                  <td>Yes</td>
-                </tr>
-                <tr>
-                  <td>Staff</td>
-                  <td>Yes</td>
-                  <td>Yes</td>
-                  <td>No</td>
-                  <td>No</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <table class="table table-light">
+            <thead class="thead-light">
+              <tr>
+                <th>#</th>
+                <th>Roles</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($user->roles as $key=> $role)
+              <tr>
+                <td> {{ ++$key}} </td>
+                <td>{{$role->name}} </td>
+              </tr>
+              @endforeach
+
+            </tbody>
+
+          </table>
+
         </div>
+
       </div>
     </div>
   </div>
@@ -109,54 +107,35 @@
     <div class="card-body">
       <div class="row bg-primary bg-lighten-5 rounded mb-2 mx-25 text-center text-lg-left">
         <div class="col-12 col-sm-4 p-2">
-          <h6 class="text-primary mb-0">Posts: <span class="font-large-1 align-middle">125</span></h6>
+          <h6 class="text-primary mb-0">Requests: <span class="font-large-1 align-middle">125</span></h6>
         </div>
         <div class="col-12 col-sm-4 p-2">
-          <h6 class="text-primary mb-0">Followers: <span class="font-large-1 align-middle">534</span></h6>
+          <h6 class="text-primary mb-0">Levels: <span class="font-large-1 align-middle">534</span></h6>
         </div>
         <div class="col-12 col-sm-4 p-2">
-          <h6 class="text-primary mb-0">Following: <span class="font-large-1 align-middle">256</span></h6>
+          <h6 class="text-primary mb-0">Messages: <span class="font-large-1 align-middle">256</span></h6>
         </div>
       </div>
       <div class="col-12">
         <table class="table table-borderless">
           <tbody>
-            <tr>
-              <td>Username:</td>
-              <td class="users-view-username">dean3004</td>
-            </tr>
+
             <tr>
               <td>Name:</td>
-              <td class="users-view-name">Dean Stanley</td>
+              <td class="users-view-name">{{$user->name}}</td>
             </tr>
             <tr>
               <td>E-mail:</td>
-              <td class="users-view-email">deanstanley@gmail.com</td>
+              <td class="users-view-email">{{$user->email}}</td>
             </tr>
             <tr>
-              <td>Comapny:</td>
-              <td>XYZ Corp. Ltd.</td>
+              <td>Phone:</td>
+              <td>{{$user->phone}}</td>
             </tr>
 
           </tbody>
         </table>
-        <h5 class="mb-1"><i class="bx bx-link"></i> Social Links</h5>
-        <table class="table table-borderless">
-          <tbody>
-            <tr>
-              <td>Twitter:</td>
-              <td><a href="javascript:void(0);">https://www.twitter.com/</a></td>
-            </tr>
-            <tr>
-              <td>Facebook:</td>
-              <td><a href="javascript:void(0);">https://www.facebook.com/</a></td>
-            </tr>
-            <tr>
-              <td>Instagram:</td>
-              <td><a href="javascript:void(0);">https://www.instagram.com/</a></td>
-            </tr>
-          </tbody>
-        </table>
+
         <h5 class="mb-1"><i class="bx bx-info-circle"></i> Personal Info</h5>
         <table class="table table-borderless mb-0">
           <tbody>
@@ -166,7 +145,7 @@
             </tr>
             <tr>
               <td>Country:</td>
-              <td>USA</td>
+              <td>Kenya</td>
             </tr>
             <tr>
               <td>Languages:</td>
@@ -174,7 +153,7 @@
             </tr>
             <tr>
               <td>Contact:</td>
-              <td>+(305) 254 24668</td>
+              <td>{{$user->phone}}</td>
             </tr>
           </tbody>
         </table>
@@ -188,5 +167,5 @@
 @endsection
 {{-- page scripts --}}
 @section('page-scripts')
-<script src="{{asset('js/scripts/pages/app-users.js')}}"></script>
+{{-- <script src="{{asset('js/scripts/pages/app-users.js')}}"></script> --}}
 @endsection

@@ -14,13 +14,16 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct() {
+      $this->middleware('auth') ;
+    }
 
     public function index(){
       $pageConfigs = ['pageHeader' => true];
       $breadcrumbs = [
         ["link" => "/", "name" => "app"],["name" => "Users"]
       ];
-      $users = User::latest()->all();
+      $users = User::latest()->with('roles')->get();
       return view('pages\app-users-list',['pageConfigs'=>$pageConfigs,'breadcrumbs'=>$breadcrumbs,'users'=>$users]);
     }
 
@@ -53,7 +56,12 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+      $pageConfigs = ['pageHeader' => true];
+      $breadcrumbs = [
+        ["link" => "/", "name" => "app"],["link" => "/app/admin/users", "name" => "users"] ,["name" => "User view"]
+      ];
+
+      return view('pages.app-users-view',['pageConfigs'=>$pageConfigs,'breadcrumbs'=>$breadcrumbs,'user'=>$user]);
     }
 
     /**
@@ -64,7 +72,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+
     }
 
     /**

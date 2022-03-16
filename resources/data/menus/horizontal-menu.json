@@ -8,12 +8,7 @@
       "icon": "desktop",
       "dropdown": "1",
       "submenu": [
-        {
-          "url": "/",
-          "name": "eCommerce",
-          "icon": "bx bx-right-arrow-alt",
-          "slug": "dashboard-ecommerce"
-        },
+
         {
           "url": "dashboard/analytics",
           "name": "Analytics",

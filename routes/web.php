@@ -200,6 +200,6 @@ Route::get('lang/{locale}', [LanguageController::class, 'swap'])->name('lang-loc
 //County work
 Route::middleware(['auth'])->prefix('app')->group(function(){
   Route::prefix("admin")->group(function(){
-    Route::resource('users',UserController::class);
+    Route::resource('users',UserController::class) ;
   });
 });

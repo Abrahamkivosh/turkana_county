@@ -1,6 +1,5 @@
 {
   "listItems": [
-    {"name":"eCommerce Dashboard", "url":"dashboard/ecommerce","icon":"bx bx-desktop"},
     {"name":"Analytics Dashboard", "url":"dashboard/analytics","icon":"bx bx-desktop"},
     {"name":"Email", "url":"app/email","icon":"bx bx-envelope"},
     {"name":"Chat", "url":"app/chat","icon":"bx bx-chat"},
@@ -12,9 +11,7 @@
     {"name":"Invoice Edit", "url":"app/invoice/edit","icon":"bx bx-file"},
     {"name":"Invoice Add", "url":"app/invoice/add","icon":"bx bx-file"},
     {"name":"File Manager", "url":"app/file-manager","icon":"bx bx-save"},
-    {"name":"Users List", "url":"app/users/list","icon":"bx bx-search"},
-    {"name":"Users View", "url":"app/users/view","icon":"bx bx-search"},
-    {"name":"Users Edit", "url":"app/users/edit","icon":"bx bx-search"},
+
 
     {"name":"Content - Grid", "url":"content/grid","icon":"bx bx-repeat"},
     {"name":"Content - Typography", "url":"content/typography","icon":"bx bx-edit-alt"},
@@ -108,6 +105,13 @@
     {"name":"Media Player", "url":"extension/media-player","icon":"bx bx-music"},
     {"name":"Miscellaneous", "url":"extension/miscellaneous","icon":"bx bx-sitemap"},
     {"name":"I18n", "url":"extension/i18n","icon":"bx bx-globe"},
-    {"name":"Ratings", "url":"extension/ratings","icon":"bx bx-star"}
+    {"name":"Ratings", "url":"extension/ratings","icon":"bx bx-star"},
+
+
+
+
+
+    {"name":"Users List", "url":"app/admin/users","icon":"bx bx-search"}
+
   ]
 }
