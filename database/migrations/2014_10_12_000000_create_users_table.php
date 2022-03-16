@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string("national_id")->nullable();
             $table->string("employee_no")->nullable();
             $table->string('email')->unique();
+            $table->enum("status",['active','banned'])->default('active') ;
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

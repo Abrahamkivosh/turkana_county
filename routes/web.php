@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ApplicationController;
@@ -195,3 +196,10 @@ Route::group(['prefix' => 'extension'], function () {
 
 // locale Route
 Route::get('lang/{locale}', [LanguageController::class, 'swap'])->name('lang-locale');
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//County work
+Route::middleware(['auth'])->prefix('app')->group(function(){
+  Route::prefix("admin")->group(function(){
+    Route::resource('users',UserController::class);
+  });
+});
