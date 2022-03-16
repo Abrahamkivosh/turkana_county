@@ -136,6 +136,8 @@ return [
   "Ratings"=>"Ratings",
   "message" => "message",
   "Admin"=>"Admin",
+  "AddUser"=>"Add User",
+  "Users"=> "Users"
 
 ];
 ?>

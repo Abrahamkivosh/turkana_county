@@ -90,27 +90,21 @@
     },
      {
       "url": "#",
-      "name": "Admin",
+      "name": "Users",
       "slug": "user",
       "icon": "users",
       "submenu": [
         {
-          "url": "app/users/list",
+          "url": "/app/admin/users",
           "name": "List",
           "slug": "app-users-list",
           "icon": "bx bx-right-arrow-alt"
         },
         {
-          "url": "app/users/view",
-          "name": "View",
+          "url": "/app/admin/users/create",
+          "name": "AddUser",
           "slug": "app-users-view",
-          "icon": "bx bx-right-arrow-alt"
-        },
-        {
-          "url": "app/users/edit",
-          "name": "Edit",
-          "slug": "app-users-edit",
-          "icon": "bx bx-right-arrow-alt"
+          "icon": "notebook"
         }
       ]
     },

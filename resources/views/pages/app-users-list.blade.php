@@ -66,7 +66,7 @@
                 <th>verified</th>
                 <th>role</th>
                 <th>status</th>
-                <th>edit</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -94,7 +94,10 @@
                   <span class="badge badge-light-danger">Banned</span>
                   @endif
                    </td>
-                <td><a href="{{route('users.edit',$user)}}"><i class="bx bx-edit-alt"></i></a></td>
+                <td>
+                  <a href="{{route('users.show',$user)}}"><i class="bx bx-show"></i></a>
+                  <a href="{{route('users.edit',$user)}}"><i class="bx bx-edit-alt"></i></a>
+                </td>
               </tr>
 
               @endforeach
