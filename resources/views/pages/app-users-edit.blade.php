@@ -37,7 +37,7 @@
             <!-- users edit media object start -->
             <div class="media mb-2">
                 <a class="mr-2" href="javascript:void(0);">
-                  <img src="{{asset('images/portrait/small/avatar-s-26.jpg')}}" alt="users avatar"
+                  <img src="/storage/user/{{ $user->image }}" alt="users avatar"
                       class="users-avatar-shadow rounded-circle" height="64" width="64">
                 </a>
                 <div class="media-body">
@@ -50,153 +50,101 @@
             </div>
             <!-- users edit media object ends -->
             <!-- users edit account form start -->
-            <form class="form-validate">
+            <form method="POST" action="{{route('users.update',$user)}}" class="form-validate" enctype="multipart/form-data" >
+              @csrf
+              @method("PUT")
                 <div class="row">
                   <div class="col-12 col-sm-6">
+
                       <div class="form-group">
                         <div class="controls">
-                            <label>Username</label>
-                            <input type="text" class="form-control" placeholder="Username"
-                                value="dean3004"
-                                name="username">
+                          <label class="text-bold-600" for="name">Name</label>
+                          <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $user->name }}"  autocomplete="name" autofocus placeholder="Full Name">
+                          @error('name')
+                            <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                            </span>
+                          @enderror
                         </div>
                       </div>
                       <div class="form-group">
                         <div class="controls">
-                            <label>Name</label>
-                            <input type="text" class="form-control" placeholder="Name"
-                                value="Dean Stanley"
-                                name="name">
+                          <label class="text-bold-600" for="email">Email address</label>
+                          <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $user->email }}"  autocomplete="email" placeholder="Email address">
+                          @error('email')
+                            <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                            </span>
+                          @enderror
                         </div>
                       </div>
                       <div class="form-group">
                         <div class="controls">
-                            <label>E-mail</label>
-                            <input type="email" class="form-control" placeholder="Email"
-                                value="deanstanley@gmail.com"
-                                name="email">
+                          <label class="text-bold-600" for="phone">Phone</label>
+                          <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ $user->phone }}"  autocomplete="phone" placeholder="phone ">
+                          @error('phone')
+                            <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                            </span>
+                          @enderror
                         </div>
                       </div>
+
+                      <div class="form-group">
+                        <div class="controls">
+                          <label class="text-bold-600" for="image">User Image</label>
+                          <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image" value=""  autocomplete="image" placeholder="image ">
+                          @error('image')
+                            <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                            </span>
+                          @enderror
+                        </div>
+                      </div>
+
                   </div>
                   <div class="col-12 col-sm-6">
                       <div class="form-group">
-                        <label>Role</label>
-                        <select class="form-control">
-                            <option>User</option>
-                            <option>Staff</option>
-                        </select>
+                        <label class="text-bold-600" for="email">National Id</label>
+                        <input id="national_id" type="text" class="form-control @error('national_id') is-invalid @enderror" name="national_id" value="{{ $user->national_id }}"  autocomplete="national_id" placeholder="National Id">
+                          @error('national_id')
+                            <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                            </span>
+                          @enderror
+
                       </div>
                       <div class="form-group">
                         <label>Status</label>
-                        <select class="form-control">
-                            <option>Active</option>
-                            <option>Banned</option>
-                            <option>Close</option>
+                        <select name="status" class="form-control">
+
+                          @if ($user->status =="active")
+                          <option value="active" selected >Active</option>
+                          <option value="banned" >Banned</option>
+                          @else
+                          <option value="banned" selected >Banned</option>
+                          <option value="active" selected >Active</option>
+                          @endif
+
+
+
                         </select>
                       </div>
                       <div class="form-group">
-                        <label>Company</label>
-                        <input type="text" class="form-control" placeholder="Company name">
+                        <label class="text-bold-600" for="employee_no">employee Number</label>
+                        <input id="employee_no" type="text" class="form-control @error('employee_no') is-invalid @enderror" name="employee_no" value="{{ $user->employee_no }}"  autocomplete="employee_no" placeholder="employee No">
+                          @error('employee_no')
+                            <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                            </span>
+                          @enderror
+
                       </div>
+
+
+
                   </div>
-                  <div class="col-12">
-                      <div class="table-responsive">
-                        <table class="table mt-1">
-                            <thead>
-                                <tr>
-                                  <th>Module Permission</th>
-                                  <th>Read</th>
-                                  <th>Write</th>
-                                  <th>Create</th>
-                                  <th>Delete</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                  <td>Users</td>
-                                  <td>
-                                      <div class="checkbox"><input type="checkbox"
-                                            id="users-checkbox1" class="checkbox-input" checked>
-                                        <label for="users-checkbox1"></label>
-                                      </div>
-                                  </td>
-                                  <td>
-                                      <div class="checkbox"><input type="checkbox"
-                                            id="users-checkbox2" class="checkbox-input"><label
-                                            for="users-checkbox2"></label>
-                                      </div>
-                                  </td>
-                                  <td>
-                                      <div class="checkbox"><input type="checkbox"
-                                            id="users-checkbox3" class="checkbox-input"><label
-                                            for="users-checkbox3"></label>
-                                      </div>
-                                  </td>
-                                  <td>
-                                      <div class="checkbox"><input type="checkbox"
-                                            id="users-checkbox4" class="checkbox-input" checked>
-                                        <label for="users-checkbox4"></label>
-                                      </div>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>Articles</td>
-                                  <td>
-                                      <div class="checkbox"><input type="checkbox"
-                                            id="users-checkbox5" class="checkbox-input"><label
-                                            for="users-checkbox5"></label>
-                                      </div>
-                                  </td>
-                                  <td>
-                                      <div class="checkbox"><input type="checkbox"
-                                            id="users-checkbox6" class="checkbox-input" checked>
-                                        <label for="users-checkbox6"></label>
-                                      </div>
-                                  </td>
-                                  <td>
-                                      <div class="checkbox"><input type="checkbox"
-                                            id="users-checkbox7" class="checkbox-input"><label
-                                            for="users-checkbox7"></label>
-                                      </div>
-                                  </td>
-                                  <td>
-                                      <div class="checkbox"><input type="checkbox"
-                                            id="users-checkbox8" class="checkbox-input" checked>
-                                        <label for="users-checkbox8"></label>
-                                      </div>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>Staff</td>
-                                  <td>
-                                      <div class="checkbox"><input type="checkbox"
-                                            id="users-checkbox9" class="checkbox-input" checked>
-                                        <label for="users-checkbox9"></label>
-                                      </div>
-                                  </td>
-                                  <td>
-                                      <div class="checkbox"><input type="checkbox"
-                                            id="users-checkbox10" class="checkbox-input" checked>
-                                        <label for="users-checkbox10"></label>
-                                      </div>
-                                  </td>
-                                  <td>
-                                      <div class="checkbox"><input type="checkbox"
-                                            id="users-checkbox11" class="checkbox-input"><label
-                                            for="users-checkbox11"></label>
-                                      </div>
-                                  </td>
-                                  <td>
-                                      <div class="checkbox"><input type="checkbox"
-                                            id="users-checkbox12" class="checkbox-input"><label
-                                            for="users-checkbox12"></label>
-                                      </div>
-                                  </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                      </div>
-                  </div>
+
                   <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
                       <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">Save
                         changes</button>
@@ -208,117 +156,7 @@
         </div>
         <div class="tab-pane fade show" id="information" aria-labelledby="information-tab" role="tabpanel">
             <!-- users edit Info form start -->
-            <form class="form-validate">
-                <div class="row">
-                  <div class="col-12 col-sm-6">
-                      <h5 class="mb-1"><i class="bx bx-link mr-25"></i>Social Links</h5>
-                      <div class="form-group">
-                        <label>Twitter</label>
-                        <input class="form-control" type="text" value="https://www.twitter.com/">
-                      </div>
-                      <div class="form-group">
-                        <label>Facebook</label>
-                        <input class="form-control" type="text" value="https://www.facebook.com/">
-                      </div>
-                      <div class="form-group">
-                        <label>Google+</label>
-                        <input class="form-control" type="text">
-                      </div>
-                      <div class="form-group">
-                        <label>LinkedIn</label>
-                        <input class="form-control" type="text">
-                      </div>
-                      <div class="form-group">
-                        <label>Instagram</label>
-                        <input class="form-control" type="text" value="https://www.instagram.com/">
-                      </div>
-                  </div>
-                  <div class="col-12 col-sm-6 mt-1 mt-sm-0">
-                      <h5 class="mb-1"><i class="bx bx-user mr-25"></i>Personal Info</h5>
-                      <div class="form-group">
-                        <div class="controls position-relative">
-                            <label>Birth date</label>
-                            <input type="text" class="form-control birthdate-picker"
-                                placeholder="Birth date"
-                                name="dob">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label>Country</label>
-                        <select class="form-control" id="accountSelect">
-                            <option>USA</option>
-                            <option>India</option>
-                            <option>Canada</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label>Languages</label>
-                        <select class="form-control" id="users-language-select2">
-                            <option value="English" selected>English</option>
-                            <option value="Spanish">Spanish</option>
-                            <option value="French">French</option>
-                            <option value="Russian">Russian</option>
-                            <option value="German">German</option>
-                            <option value="Arabic" selected>Arabic</option>
-                            <option value="Sanskrit">Sanskrit</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <div class="controls">
-                            <label>Phone</label>
-                            <input type="text" class="form-control" placeholder="Phone number"
-                                value="(+656) 254 2568" name="phone">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <div class="controls">
-                            <label>Address</label>
-                            <input type="text" class="form-control" placeholder="Address"
-                            name="address">
-                        </div>
-                      </div>
-                  </div>
-                  <div class="col-12">
-                      <div class="form-group">
-                        <label>Website</label>
-                        <input type="text" class="form-control" placeholder="Website address"
-                        name="website">
-                      </div>
-                      <div class="form-group">
-                        <label>Favourite Music</label>
-                        <select class="form-control" id="users-music-select2">
-                            <option value="Rock">Rock</option>
-                            <option value="Jazz" selected>Jazz</option>
-                            <option value="Disco">Disco</option>
-                            <option value="Pop">Pop</option>
-                            <option value="Techno">Techno</option>
-                            <option value="Folk" selected>Folk</option>
-                            <option value="Hip hop">Hip hop</option>
-                        </select>
-                      </div>
-                  </div>
-                  <div class="col-12">
-                      <div class="form-group">
-                        <label>Favourite movies</label>
-                        <select class="form-control" id="users-movies-select2">
-                            <option value="The Dark Knight" selected>The Dark Knight
-                            </option>
-                            <option value="Harry Potter" selected>Harry Potter</option>
-                            <option value="Airplane!">Airplane!</option>
-                            <option value="Perl Harbour">Perl Harbour</option>
-                            <option value="Spider Man">Spider Man</option>
-                            <option value="Iron Man" selected>Iron Man</option>
-                            <option value="Avatar">Avatar</option>
-                        </select>
-                      </div>
-                  </div>
-                  <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                      <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">Save
-                        changes</button>
-                      <button type="reset" class="btn btn-light">Cancel</button>
-                  </div>
-                </div>
-            </form>
+
             <!-- users edit Info form ends -->
         </div>
       </div>
@@ -338,6 +176,6 @@
 
 {{-- page scripts --}}
 @section('page-scripts')
-<script src="{{asset('js/scripts/pages/app-users.js')}}"></script>
+{{-- <script src="{{asset('js/scripts/pages/app-users.js')}}"></script> --}}
 <script src="{{asset('js/scripts/navs/navs.js')}}"></script>
 @endsection

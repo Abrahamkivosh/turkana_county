@@ -13,7 +13,7 @@
     <div class="col-12 col-sm-7">
       <div class="media mb-2">
         <a class="mr-1" href="javascript:void(0);">
-          <img src="{{asset('images/portrait/small/avatar-s-26.jpg')}}" alt="users view avatar"
+          <img src="/storage/user/{{ $user->image }}" alt="users view avatar"
             class="users-avatar-shadow rounded-circle" height="64" width="64">
         </a>
         <div class="media-body pt-25">

@@ -6,8 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 
 class UserController extends Controller
 {
@@ -43,7 +47,7 @@ class UserController extends Controller
       ["link" => "/", "name" => "app"],  ["link" => "/app/admin/users", "name" => "users view"], ["name" => "Users create"]
     ];
     $roles = Role::latest()->get();
-    return view('pages.app-users-create', ['pageConfigs' => $pageConfigs, 'breadcrumbs' => $breadcrumbs,'roles'=>$roles]);
+    return view('pages.app-users-create', ['pageConfigs' => $pageConfigs, 'breadcrumbs' => $breadcrumbs, 'roles' => $roles]);
   }
 
   /**
@@ -54,10 +58,12 @@ class UserController extends Controller
    */
   public function store(StoreUserRequest $request)
   {
+
+
     $data = $request->validated();
     $data['password'] = Hash::make("password");
 
-   $roleIds =$data["role"] ;
+    $roleIds = $data["role"];
 
     $user = new User();
 
@@ -70,7 +76,7 @@ class UserController extends Controller
 
     $user->save();
 
-    $user->assignRole($roleIds) ;
+    $user->assignRole($roleIds);
 
     return redirect()->route("users.index")->with("success", "User created successfully");
   }
@@ -103,6 +109,11 @@ class UserController extends Controller
    */
   public function edit(User $user)
   {
+    $pageConfigs = ['pageHeader' => true];
+    $breadcrumbs = [
+      ["link" => "/", "name" => "app"], ["link" => "/app/admin/users/", "name" => "users"], ["name" => "User Edit"]
+    ];
+    return view('pages.app-users-edit', ['pageConfigs' => $pageConfigs, 'breadcrumbs' => $breadcrumbs, 'user' => $user]);
   }
 
   /**
@@ -114,7 +125,52 @@ class UserController extends Controller
    */
   public function update(UpdateUserRequest $request, User $user)
   {
-    //
+    $data = $request->validated() ;
+
+
+    if (file_exists($request->file('image'))) {
+
+      $old_avatar = $user->image;
+      $avatar = $request->image;
+      if ($old_avatar != 'avatar.png' &&  !Str::contains($avatar, 'http')) {
+        $imagepath = public_path('/storage/user') . '/' . $old_avatar;
+
+        File::delete($imagepath);
+      }
+
+
+      // Get filename with extension
+      $filenameWithExt = $request->file('image')->getClientOriginalName();
+
+      // Get just the filename
+      $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+
+      // Get extension
+      $extension = $request->file('image')->getClientOriginalExtension();
+
+      // Create new filename
+      $filenameToStore =  time() . '.' . $extension;
+
+      // Uplaod image
+      $path = $request->file('image')->storeAs('public/user', $filenameToStore);
+
+      // Upload image
+      $user->image = $filenameToStore;
+    }
+
+
+
+    $user["name"] = $data["name"];
+    $user["email"] = $data['email'];
+    $user["phone"] =  $data['phone'];
+    $user["employee_no"] =  $data['employee_no'];
+    $user["national_id"] = $data['national_id'];
+    $user->save();
+
+    return back()->with("success","Updated user profilr") ;
+
+
+
   }
 
   /**
